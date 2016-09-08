@@ -1,0 +1,62 @@
+﻿@model Sugerencias.Models.EmailModelView
+@using reCAPTCHA.MVC
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+
+    @using (Html.BeginForm("Index", "Buzon", FormMethod.Post, new { @class = "col s12" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @*<div class="card-panel  grey lighten-1">
+                <h3 class="center-align white-text">BUZON DE SUGERENCIAS</h3>
+                <h5 class="center-align white-text">Ayudenos a mejorar!!!</h5>
+            </div>*@
+            @Html.ValidationSummary(true, "", new { @class = "teal lighten-2" })
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+
+                @Html.TextBoxFor(model => model.Nombre, htmlAttributes: new { id = "icon_prefix", @class = "validate" })
+                <label for="icon_prefix">Nombre Completo</label>
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "teal lighten-2 white-text" })
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">email</i>
+                @Html.TextBoxFor(model => model.Correo, htmlAttributes: new { id = "icon_prefix", @class = "validate" })
+                <label for="icon_telephone">Correo Electronico</label>
+                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "teal lighten-2 white-text" })
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">phone</i>
+                @Html.TextBoxFor(model => model.Telefono, htmlAttributes: new { id = "icon_prefix", @class = "validate" })
+                <label for="icon_telephone">Telefono</label>
+                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "teal lighten-2 white-text" })
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">comment</i>
+                @Html.TextAreaFor(model => model.Sugerencia, htmlAttributes: new { id = "icon_prefix", @class = "validate materialize-textarea", @rows = 3 })
+                <label for="icon_telephone">Sugerencia/Reclamo/Queja</label>
+                @Html.ValidationMessageFor(model => model.Sugerencia, "", new { @class = "teal lighten-2 white-text" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                @Html.Recaptcha()
+                @Html.ValidationMessage("ReCaptcha")
+                <button class="btn waves-effect" style="background-color: #94d600 !important;" type="submit" name="action">
+                    Enviar
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    }
+
+</div>
+<script>
+    var $toastContent = $('<span>Gracias, su mensaje ha sido enviado!!!</span>');
+    @if(TempData["mensaje"] != null)
+    {
+        @Html.Raw(@TempData["mensaje"])
+    }
+</script>
